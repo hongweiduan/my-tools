@@ -7,7 +7,8 @@ import re
 # measure_value = re.search('rms: (.*)mV',output_log)
 
 # print(measure_value.group(1))
-HOST ="192.168.66.23"
+# HOST ="192.168.66.23"
+HOST ="169.254.1.32"
 tn=telnetlib.Telnet(HOST,"7600")
 tn.open(HOST,"7600")
 tn.set_debuglevel(9)
@@ -27,14 +28,14 @@ for CNT in range(10):
     socket_log += strout
 def send_cmd(tn,cmd):
 	tn.write(cmd+"\r\n")
-	time.sleep(0.5)
+	time.sleep(0.02)
 	cmd_socket_log = ""
 	for CNT in range(10):
 	    time.sleep(0.001)
 	    strout = str(tn.read_eager())
 	    # print str(CNT) + ' -- ' + str(len(strout)) + '--' + str(strout)
 	    cmd_socket_log += strout
-	time.sleep(0.5)
+	time.sleep(0.02)
 	return cmd_socket_log	
 # strout = str(tn.read_eager())
 # socket_log += strout
@@ -45,7 +46,7 @@ output_log = "SET,MEAS"
 output_csv = "BIT,state"
 
 # send_cmd(tn,"[11]io set(2,bit44=1,bit37=1)")
-for x in xrange(20,1001,20):
+for x in xrange(1,129,1):
 	meas_log = send_cmd(tn,"[11]io read(1,bit"+str(x)+")")
 	# meas_log = send_cmd(tn,"[1]audio measure(-fm)")
 	# output_log = output_log + '\nSET rms is ' + str(x) + " mV, measure log is "+ meas_log
