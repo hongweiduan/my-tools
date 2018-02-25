@@ -1,6 +1,6 @@
 f = io.popen('ls')
 local save_csv_name = "all.csv"
-local project_name = "B419"
+local project_name = "X240"
 ls_str = f:read("*all")
 f:close()
 
@@ -31,15 +31,16 @@ for i=1,#file_name do
 	file_name[i] = string.gsub(file_name[i],"\r","")
 	file_name[i] = string.gsub(file_name[i],"\n","")
 	-- print(file_name[i])
-	local f = io.open(file_name[i],'r')
-	file_str = f:read("*all")
-	-- print(file_str)
+	if string.find(file_name[i],".csv") then 
+		local f = io.open(file_name[i],'r')
+		file_str = f:read("*all")
 	-- for i=1,#file_str do
 		if string.find(file_str,'Upper Limited') then
 			file_str_head = string.match(file_str,"(.+)"..project_name)
 			ffff:write(file_str_head)
 			break
 		end
+	end
 	-- end
 	-- end
 end
@@ -48,14 +49,14 @@ end
 for i=1,#file_name do
 	file_name[i] = string.gsub(file_name[i],"\r","")
 	file_name[i] = string.gsub(file_name[i],"\n","")
-	-- print(file_name[i])
+	print(file_name[i])
 	local f = io.open(file_name[i],'r')
 	file_str = f:read("*all")
 	-- print(file_str)
 	file_str = split(file_str,'\n')
 	for i=1,#file_str do
 		if string.find(file_str[i], project_name..'%,') then
-			print(file_str[i])
+			-- print(file_str[i])
 			ffff:write(tostring(file_str[i])..'\n')
 			-- break
 		end
