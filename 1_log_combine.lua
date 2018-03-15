@@ -1,8 +1,12 @@
 f = io.popen('ls')
-local save_csv_name = "all.csv"
-local project_name = "X240"
+local save_csv_name = "data_summary.csv"
+local project_name = "A245"
 ls_str = f:read("*all")
 f:close()
+
+if string.find(ls_str,save_csv_name) then
+	return 'pass'
+end
 
 function split(str, pat)
    local t = {}
@@ -36,7 +40,7 @@ for i=1,#file_name do
 		file_str = f:read("*all")
 	-- for i=1,#file_str do
 		if string.find(file_str,'Upper Limited') then
-			file_str_head = string.match(file_str,"(.+)"..project_name)
+			file_str_head = string.match(file_str,"(.-)"..project_name)
 			ffff:write(file_str_head)
 			break
 		end
@@ -54,10 +58,10 @@ for i=1,#file_name do
 	file_str = f:read("*all")
 	-- print(file_str)
 	file_str = split(file_str,'\n')
-	for i=1,#file_str do
-		if string.find(file_str[i], project_name..'%,') then
+	for j=1,#file_str do
+		if string.find(file_str[j], project_name..'%,') then
 			-- print(file_str[i])
-			ffff:write(tostring(file_str[i])..'\n')
+			ffff:write(tostring(file_str[j])..'\n')
 			-- break
 		end
 	end
