@@ -1,4 +1,4 @@
-f = io.popen('ls')
+f = io.popen('ls -S')
 local save_csv_name = "data_summary.csv"
 local project_name = "A245"
 ls_str = f:read("*all")
