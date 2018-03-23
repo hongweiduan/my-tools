@@ -23,7 +23,7 @@ def xmodem_dl(port, baudrate, file):
 	c = getc(13)
 	print(c)
 	modem = XMODEM(getc, putc,mode = 'xmodem1k')
-	stream = open('ARM_S_V03_171106.bin', 'rb')
+	stream = open(file, 'rb')
 	state = modem.send(stream)
 	if state:
 		dl_str = getc(100)
