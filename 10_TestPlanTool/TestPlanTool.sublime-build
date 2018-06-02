@@ -1,0 +1,4 @@
+{
+	"shell_cmd":"/usr/local/bin/TestPlanTool.sh $file",
+	"selector":["source.c"]
+}
