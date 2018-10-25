@@ -20,17 +20,19 @@ e2.grid(row=2,column=5,padx=1,pady=2)
 Label(root,text='mA').grid(row=3,column=5)
 def send_cmd(function_name,param1,param2,unit,timeout):
 	global tcp_ip
+	if timeout == None or timeout == "":
+		timeout = 3000
 	# print("tcp ip is >>"+str(tcp_ip))
 	context = zmq.Context()
 	socket = context.socket(zmq.REQ)
 	socket.connect(tcp_ip)
 	if param2 == "VOLTAGE":
 		print("Set voltage :" + e1.get() + "V")
-		socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+e1.get()+'\"],\"kwargs\":{\"timeout\":10000,\"unit\":\"'+unit+'\"}}')
+		socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+e1.get()+'\"],\"kwargs\":{\"timeout\":'+timeout+',\"unit\":\"'+unit+'\"}}')
 	elif param2 == "ELOAD":
-			socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+e2.get()+'\"],\"kwargs\":{\"timeout\":10000,\"unit\":\"'+unit+'\"}}')
+			socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+e2.get()+'\"],\"kwargs\":{\"timeout\":'+timeout+',\"unit\":\"'+unit+'\"}}')
 	else:
-		socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+param2+'\"],\"kwargs\":{\"timeout\":10000,\"unit\":\"'+unit+'\"}}')
+		socket.send('{\"id\":\"f143164097ff11e58c6d3c15c2dab3ba\",\"method\":\"'+function_name+'\",\"jsonrpc\":\"2.0\",\"args\":[\"'+param1+'\",\"'+param2+'\"],\"kwargs\":{\"timeout\":'+timeout+',\"unit\":\"'+unit+'\"}}')
 	response = socket.recv()
 	# print (response)  
 	response_pattern = re.compile('\"result\":(.+)')

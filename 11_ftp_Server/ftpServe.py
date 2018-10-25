@@ -36,7 +36,7 @@ def main():
     #handler.masquerade_address = '151.25.42.11'       #如果你在NAT之后，就用这个指定被动连接的参数
     #handler.passive_ports = range(60000, 65535)
 
-    address = ('172.15.4.114', 2121)                        #设置服务器的监听地址和端口
+    address = ('172.20.10.4', 2121)                        #设置服务器的监听地址和端口
     server = FTPServer(address, handler)
 
 
