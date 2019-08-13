@@ -1,0 +1,182 @@
+Group name,Items name,LSL,TYP,USL,Unit,Command,Power
+FIXTURE_INIT,SLOT_ID,,,,,,
+POWER_TREE,PP_BERYL_VDDMAIN,3.7,,3.9,V,"SCP:beryl pwr mode set ACT3
+SCP:beryl mfio set config 11 1
+",Set 3.8V in PP_VDDMAIN
+,PP_0V65_A0A2A3_BUCK0_OUT,0.55,,0.75,V,,
+,PP_0V85_A0A2A3_BUCK1_OUT,0.75,,0.95,V,,
+,PP_1V2R1V8_A0A2A3_BUCK2_OUT,1.4,,1.6,V,,
+,PP_1V8_HO_BUCK3_OUT,1.7,,1.9,V,,
+,PP_1V8_A0A2A3_LDO0_OUT,1.7,,1.9,V,,
+,PP_1V2_A0A2A3_LDO1_OUT,1.1,,1.3,V,,
+,PP_1V2_A3_LDO2_OUT,1.1,,1.3,V,,
+,PP_1V8_A3_LDO3_OUT,1.7,,1.9,V,,
+,PP_VDDMAIN,3.7,,3.9,V,,
+,PP_3V0_A2_LDO4_OUT,2.9,,3.1,V,,
+,PP_3V0_A0_LDO5_OUT,2.9,,3.1,V,,
+,PP_1V8_A3_LDO6_OUT,1.7,,1.9,V,,
+,PP_1V8_A3_LDO7_OUT,1.7,,1.9,V,,
+,NC_PP_2V1_XX_BUCK4_OUT,2,,2.2,V,,
+,PP_3V3_HO_BUBO0_OUT,3.25,,3.5,V,,
+,PP_3V3_FW_LS0_OUT,3.25,,3.5,V,"SCP:gpio config F 5 outputPP none high 0
+SCP:gpio set F 5 1
+",
+,PP_1V8_A0_LS1_OUT,1.7,,1.9,V,,
+,PP_0V85_A3_LS6_OUT,0.75,,0.95,V,,
+,PP_1V2R1V8_A0A2A3_BUCK2_OUT_L,1.1,,1.3,V,"SCP:beryl write 0x2200 0x20
+",
+FW_VERSION_CHECK,SCP_VERSION,,,,,"SCP:ft version
+",
+,W2_VERSION,,,,,"W2:ft version
+",
+MLBSN_CHECK,MLBSN_CHECK,,,,,,
+CHECK_CONFIG,S_BUILD,,,,,,
+,BUILD_EVENT,,,,,,
+,BUILD_MATRIX_CONFIG,,,,,,
+SYSTEM_CURRENT,I_SYSTEM_CURR_ACT3,5,,50,mA,"SCP:i2c write reg16 i2c1 0x78 0x1401 03
+SCP:i2c read reg16 i2c1 0x78 0x1401 1
+SCP:gpio config a 10 outputPP
+SCP:gpis set a 10 0
+",Set 3.8V in PP_VDDMAIN
+,I_SYSTEM_CURR_ACT0,3,,50,mA,"SCP:i2c write reg16 i2c1 0x78 0x1402 00
+SCP:i2c write reg16 i2c1 0x78 0x1401 00
+SCP:i2c read reg16 i2c1 0x78 0x1401 1
+",
+RESET_CURRENT,I_RESET_MCU_HEARST,0.001,,20,mA,,Set 3.8V in PP_VDDMAIN
+MOMENT_COMP_CALIBRATION,STM_ADC1_OFFSET,-8,,8,mV,"SCP:hidreport ctrl set 0a02
+SCP:hidreport momentcomp set 00 02
+SCP:hidreport momentcomp set 02 01
+",
+,STM_ADC2_OFFSET,-8,,8,mV,,
+,STM_ADC1_POSGAIN,2392,,2408,mV,,
+,STM_ADC2_POSGAIN,2392,,2408,mV,,
+,STM_ADC1_NEGGAIN,-2408,,-2392,mV,,
+,STM_ADC2_NEGGAIN,-2408,,-2392,mV,,
+,SAVE_THE_CAL_DATA,,,,,"SCP:hidreport momentcomp set 02 00
+SCP:syscfg print McSC
+",
+,CHECK_CAL_DATA,,,,,"SCP:syscfg add McSC 0
+",Set 3.8V in PP_VDDMAIN
+BERYL_AND_SYSTEM_OPERATION_MODES,I_BERYL_ACTIVE_MODE,5,,50,mA,"SCP:beryl pwr mode set ACT3
+SCP:beryl pwr mode get
+",
+,I_BERYL_SYSOFF,0.1,,1000,uA,"SCP:beryl pwr mode get
+",
+,I_BERYL_SHIP,0.1,,1000,uA,"SCP:beryl pwr mode set ACT3
+SCP:beryl pwr mode get
+SCP:beryl pwr mode get
+",Set 3.8V in PP_VDDMAIN
+JAKKU_TEST,ACCEL_TYPE_BASIC_MODE,0x17,,0x17,,"SCP:jakku accel get range
+SCP:jakku init
+SCP:jakku read 0
+",Set 3.8V in PP_VDDMAIN
+,JAKKU_ID,,,,,"SCP:jakku id
+",
+,ACCEL_ADOFF_X,,,,,,
+,ACCEL_ADOFF_Y,,,,,,
+,ACCEL_ADOFF_Z,,,,,,
+,ACCEL_ADGAIN_X,,,,,,
+,ACCEL_ADGAIN_Y,,,,,,
+,ACCEL_ADGAIN_Z,,,,,,
+,ACCEL_SELFTEST_X,1000,,8000,,"SCP:jakku init
+SCP:jakku selftest
+",
+,ACCEL_SELFTEST_Y,1000,,8000,,,
+,ACCEL_SELFTEST_Z,1000,,8000,,,
+,ACCEL_AVERAGE_OUTPUT_LOW_POWER_MODE,,,,,"SCP:jakku init
+SCP:jakku stream 4g 0x07 50
+",
+,ACCEL_LPM_AVERAGE_X,-820,,820,,,
+,ACCEL_LPM_AVERAGE_Y,-820,,820,,,
+,ACCEL_LPM_AVERAGE_Z,-9011,,-7372,,,
+,ACCEL_LPM_STD_X,0.1,,400,,,
+,ACCEL_LPM_STD_Y,0.1,,400,,,
+,ACCEL_LPM_STD_Z,0.1,,400,,,
+,ACCEL_TEMPERATURE_LOW_POWER_MODE,10,,40,C,"SCP:jakku get temp
+",
+,ACCEL_LNM_AVERAGE_X,-820,,820,,"SCP:jakku init
+SCP:jakku stream 4g 0x17 50
+",
+,ACCEL_LNM_AVERAGE_Y,-820,,820,,,
+,ACCEL_LNM_AVERAGE_Z,-9011,,-7372,,,
+,ACCEL_LNM_STD_X,0.1,,400,,,
+,ACCEL_LNM_STD_Y,0.1,,400,,,
+,ACCEL_LNM_STD_Z,0.1,,400,,,
+,TEMPERATURE_SENSOR_CHECK,10,,40,C,"SCP:jakku get temp
+SCP:i2c read reg8 i2c1 0xE8 0x00 1
+",
+TRISTAR_FUNCTION,TRISTAR_USB0_CHECK_VID,0x05ac,,0x05ac,,,Set 5V in PP_E75
+,TRISTAR_USB0_CHECK_PID,0x1109,,0x1109,,,
+,CHECK_STM32_ID,,,,,"SCP:i2c write reg8 i2c1 0x34 0x02 AA
+SCP:gpio config D 9 outputPP up high 0
+SCP:gpio set D 9 0
+",Set 3.8V in PP_VDDMAIN
+KOBOL_TEST,IMU_MANU_ID,,,,,"SCP:ft reset
+SCP:system events disable
+SCP:power set active
+SCP:ft tm e0
+W2:accel info
+W2:gyro info
+W2:spi transfer aon 2 00000000
+",
+,IMU_CHIP_ID,,,,,,
+,IMU_REV_ID,,,,,,
+,IMU_ASIC_ID_1,,,,,"W2:spi transfer aon 2 0b000000000000
+",
+,IMU_ASIC_ID_2,,,,,,
+,IMU_ASIC_ID_3,,,,,,
+,IMU_ASIC_ID_4,,,,,,
+,IMU_ASIC_ID_5,,,,,,
+,IMU_ASIC_ID_6,,,,,,
+,ACCEL_SELFTEST,,,,,"W2:accel selftest raw 5000
+",
+,GYRO_SELFTEST,,,,,"W2:gyro selftest raw
+",
+,IMU_ACCEL_NORMAL_AVERAGE_X,-0.100,,0.100,,"W2:imu stream 5000 100 calibrated
+",
+,IMU_ACCEL_NORMAL_AVERAGE_Y,-0.100,,0.100,,,
+,IMU_ACCEL_NORMAL_AVERAGE_Z,-0.900,,1.100,,,
+,IMU_ACCEL_NORMAL_ODR,180,,220,HZ,,
+,IMU_ACCEL_NORMAL_STD_X,0.00001,,0.050,,,
+,IMU_ACCEL_NORMAL_STD_Y,0.00001,,0.050,,,
+,IMU_ACCEL_NORMAL_STD_Z,0.00001,,0.050,,,
+,IMU_GYRO_NORMAL_AVERAGE_X,-25,,25,,,
+,IMU_GYRO_NORMAL_AVERAGE_Y,-25,,25,,,
+,IMU_GYRO_NORMAL_AVERAGE_Z,-25,,25,,,
+,IMU_GYRO_NORMAL_ODR,180,,220,HZ,,
+,IMU_GYRO_NORMAL_STD_X,0.00001,,1,,,
+,IMU_GYRO_NORMAL_STD_Y,0.00001,,1,,,
+,IMU_GYRO_NORMAL_STD_Z,0.00001,,1,,,
+CHECK_LINK_QUALITY,HEADBAND_ID,4,,7,,"SCP:ft reset
+SCP:headband id
+",Set 3.8V in PP_VBATT
+,CHECK_LINK_QUALITY,,,,,"SCP:b2p ping all
+SCP:b2p link quality cp 100 1000
+",
+,CHECK_LINK_QUALITY_ACTIVE,,,,,"SCP:system set active
+SCP:b2p ping all
+SCP:b2p link quality cp 100 1000
+",
+CROSS_CUP_RESET_TEST,B2P_PING_ALL,,,,,"SCP:b2p ping all
+",
+,CHUNNEL_WRITE_0X06_0X08,,,,,"SCP:chunnel write 0x06 0x08
+",
+,B2P_PING_ALL,,,,,"SCP:b2p ping all
+",
+CUPS_SYNCHRONIZATION_TEST,REP_CHUNNEL_SYNC_GET_2_TIMES,47900,,48100,,"SCP:system set active
+SCP:ft tunnel open
+SCP:chunnel sync start
+SCP:rep ""chunnel sync get"" 2 1000
+",
+ABBOT_TEST,B2P_PING_ALL,,,,,"SCP:ft tunnel close
+SCP:ft reset
+SCP:system set active
+SCP:b2p ping all
+",
+,AUDIO_FREQ,,,,,"SCP:ft tm 20
+SCP:ft tm 21
+",
+,AUDIO_RMS,,,,,,
+,AUDIO_VPP,,,,,,
+,AUDIO_THD,,,,,,
+,AUDIO_THDN,,,,,,

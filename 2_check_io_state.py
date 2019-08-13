@@ -8,7 +8,7 @@ import re
 
 # print(measure_value.group(1))
 # HOST ="192.168.66.23"
-HOST ="169.254.1.32"
+HOST ="169.254.1.35"
 tn=telnetlib.Telnet(HOST,"7600")
 tn.open(HOST,"7600")
 tn.set_debuglevel(9)
@@ -46,12 +46,13 @@ output_log = "SET,MEAS"
 output_csv = "BIT,state"
 
 # send_cmd(tn,"[11]io set(2,bit44=1,bit37=1)")
-for x in xrange(1,129,1):
+for x in xrange(1,150,1):
 	meas_log = send_cmd(tn,"[11]io read(1,bit"+str(x)+")")
 	# meas_log = send_cmd(tn,"[1]audio measure(-fm)")
 	# output_log = output_log + '\nSET rms is ' + str(x) + " mV, measure log is "+ meas_log
 	measure_value = re.search('ACK\((.*)\)',meas_log)
-	output_csv = output_csv + '\n'+str(x) + ','+ str(measure_value.group(1))
+	if "=1;" in measure_value.group(1):
+		output_csv = output_csv + '\n'+str(x) + ','+ str(measure_value.group(1))
 print("***********************")
 print(output_csv)
 print("**********************")
